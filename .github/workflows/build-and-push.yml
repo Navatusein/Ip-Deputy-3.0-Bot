@@ -1,0 +1,30 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get branch name
+      id: branch
+      run: echo "::set-output name=branch::$(basename ${GITHUB_REF})"
+      
+    - name: Build Docker Image
+      run: docker build -t navatusein/ip-deputy-bot:${{ steps.branch.outputs.branch }} -t navatusein/ip-deputy-bot:latest .
+
+    - name: Log in to Docker Hub
+      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Push Docker Image
+      run: docker push navatusein/ip-deputy-bot -a
