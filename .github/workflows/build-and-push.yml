@@ -15,7 +15,7 @@ jobs:
 
     - name: Get branch name
       id: branch
-      run: echo "::set-output name=branch::$(basename ${GITHUB_REF})"
+      run: echo "::set-output name=branch::${GITHUB_REF/refs\/pull\/[0-9]*\//}"
       
     - name: Build Docker Image
       run: docker build -t navatusein/ip-deputy-bot:${{ steps.branch.outputs.branch }} -t navatusein/ip-deputy-bot:latest .
