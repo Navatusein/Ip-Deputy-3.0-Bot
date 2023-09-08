@@ -1,6 +1,6 @@
 import logging
 
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import Message
@@ -18,7 +18,7 @@ class AuthorizeStatesGroup(StatesGroup):
     contact = State()
 
 
-@router.message(AuthorizeStatesGroup.contact)
+@router.message(AuthorizeStatesGroup.contact, F.content_type == "contact")
 async def handler(message: Message, state: FSMContext) -> None:
     telegram_id: int = message.from_user.id
     phone: str = str(int(message.contact.phone_number))

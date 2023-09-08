@@ -76,7 +76,7 @@ def settings_menu_keyboard() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text=_("📋 Головне меню"))],
-            [KeyboardButton(text=_("🇺🇦 Мова"))],
+            # [KeyboardButton(text=_("🇺🇦 Мова"))],
             [KeyboardButton(text=_("🗓 Формат розкладу"))],
             [KeyboardButton(text=_("🔔 Нагадувати дедлайни"))],
         ],

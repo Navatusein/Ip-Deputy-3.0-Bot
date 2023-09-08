@@ -1,9 +1,12 @@
+import pytz
+
 from datetime import datetime, timedelta
 
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 
+from bot.config import Config
 from bot.filters.is_authorized import IsAuthorized
 from bot.models.student_settings import StudentSettings
 from bot.utilities.format_schedule_message import format_day_schedule_message, format_week_schedule_message
@@ -12,15 +15,15 @@ router = Router()
 
 
 @router.message(Command("today"), IsAuthorized())
-async def today_schedule(message: Message) -> None:
-    date = datetime.today()
+async def today_schedule(message: Message, configs: Config) -> None:
+    date = datetime.now(pytz.timezone(configs.time_zone))
     schedule = format_day_schedule_message(message.from_user.id, date)
     await message.answer(schedule)
 
 
 @router.message(Command("tomorrow"), IsAuthorized())
-async def tomorrow_schedule(message: Message) -> None:
-    date = datetime.today() + timedelta(days=1)
+async def tomorrow_schedule(message: Message, configs: Config) -> None:
+    date = datetime.now(pytz.timezone(configs.time_zone)) + timedelta(days=1)
     schedule = format_day_schedule_message(message.from_user.id, date)
     await message.answer(schedule)
 

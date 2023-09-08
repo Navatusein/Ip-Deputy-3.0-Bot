@@ -59,7 +59,7 @@ async def main() -> None:
             BotCommand(command="tomorrow_week", description="Отримати розклад на настурний тиждень"),
         ]
     )
-    await dp.start_polling(bot, cache={}, i18n=i18n)
+    await dp.start_polling(bot, cache={}, i18n=i18n, configs=configs)
 
 
 if __name__ == "__main__":
