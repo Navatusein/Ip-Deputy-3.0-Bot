@@ -19,3 +19,8 @@ class StudentService:
         response = client.put("/student/settings", json=settings.to_dict())
         response.raise_for_status()
         return StudentSettings.from_dict(response.json())
+
+    @staticmethod
+    def update_last_activity(telegram_id: int) -> None:
+        response = client.put("/student/last-activity", params={"telegramId": telegram_id})
+        response.raise_for_status()

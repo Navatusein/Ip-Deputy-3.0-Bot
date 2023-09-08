@@ -8,6 +8,7 @@ from aiogram.types import BotCommand
 from aiogram.utils.i18n import I18n, ConstI18nMiddleware
 
 from bot.config import load_config
+from bot.middlewares.last_activity import LastActivity
 from bot.middlewares.localization import Localization
 from bot.handlers.commands import start_command, exception_command, test_command, schedule_commands
 from bot.handlers.others import not_authorized_handler, exceptions_handler
@@ -32,6 +33,9 @@ async def main() -> None:
     dp.message.outer_middleware(Localization(i18n=i18n))
     # dp.message.outer_middleware(ConstI18nMiddleware(locale="uk", i18n=i18n))
 
+    # Last activity middleware
+    dp.message.middleware(LastActivity())
+
     # Command handlers
     dp.include_routers(start_command.router, exception_command.router, test_command.router,
                        schedule_commands.router)
@@ -55,8 +59,8 @@ async def main() -> None:
             BotCommand(command="start", description="Показати головне меню"),
             BotCommand(command="today", description="Отримати розклад на сьогодні"),
             BotCommand(command="tomorrow", description="Отримати розклад на завтра"),
-            BotCommand(command="today_week", description="Отримати розклад на цей тиждень"),
-            BotCommand(command="tomorrow_week", description="Отримати розклад на настурний тиждень"),
+            BotCommand(command="this_week", description="Отримати розклад на цей тиждень"),
+            BotCommand(command="next_week", description="Отримати розклад на настурний тиждень"),
         ]
     )
     await dp.start_polling(bot, cache={}, i18n=i18n, configs=configs)

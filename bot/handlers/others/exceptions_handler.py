@@ -1,4 +1,5 @@
 import logging
+import uuid
 
 from aiogram import Router, F
 from aiogram.filters import ExceptionTypeFilter
@@ -20,5 +21,6 @@ async def error_handler(event: ErrorEvent, message: Message, i18n: I18n):
 # Handler for unhandled exceptions
 @router.error(F.update.message.as_("message"))
 async def error_handler(event: ErrorEvent, message: Message, i18n: I18n):
-    logging.critical("Unhandled error: %s", event.exception, exc_info=True)
-    await message.answer(i18n.gettext("Упс, щось пішло не так."))
+    code = uuid.uuid4().hex[:10].lower()
+    logging.critical("[%s] Unhandled error: %s",code, event.exception, exc_info=True)
+    await message.answer(i18n.gettext("Упс, щось пішло не так.\nКод помилки: <code>{code}</code>").format(code=code))
