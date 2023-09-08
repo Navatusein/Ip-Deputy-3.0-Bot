@@ -35,14 +35,15 @@ def format_week_schedule_message(telegram_id: int, date: datetime, compact: bool
 
     if compact:
         message += _(f'<b>Час пар:</b>\n')
+
         for index, value in enumerate(schedule_week.couple_times):
-            message += f'{number_emoji[index + 1]} {value.replace(" ", "")}\n'
+            message += f'{number_emoji[index + 1]} {value}\n'
 
         message += '\n'
 
     for index, schedule_day in enumerate(schedule_week.schedule_days):
         message += f'<b>{days_of_week[index]} ({schedule_day.date}):</b>\n'
-        message += format_day_couples(schedule_day)
+        message += format_day_couples(schedule_day, not compact)
         message += "\n"
 
     return message

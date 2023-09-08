@@ -12,6 +12,7 @@ class Config(DataClassJsonMixin):
     api_token: str
     api_url: str
     frontend_url: str
+    time_zone: str
 
 
 def load_config() -> Config:

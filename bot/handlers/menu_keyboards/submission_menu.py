@@ -136,7 +136,7 @@ async def handler(message: Message, state: FSMContext) -> None:
         return
 
     await state.clear()
-    message_string = format_submission_message(submissions_config.submissions, message.text)
+    message_string = format_submission_message(submissions_config.submissions, type)
     await message.answer(message_string, reply_markup=submission_menu_keyboard())
 
 
@@ -144,7 +144,7 @@ def format_submission_message(submissions: list[Submission], type: str) -> str:
     message = ""
     students = list(dict.fromkeys([x.student for x in submissions]))
 
-    if students == set():
+    if len(students) == 0:
         return _("На захист ніхто не записався")
 
     for index, student in enumerate(students):

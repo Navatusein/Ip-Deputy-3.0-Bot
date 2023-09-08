@@ -16,6 +16,6 @@ class StudentService:
 
     @staticmethod
     def update_settings(settings: StudentSettings) -> StudentSettings:
-        response = client.post("/student/settings", json=settings.to_dict())
+        response = client.put("/student/settings", json=settings.to_dict())
         response.raise_for_status()
         return StudentSettings.from_dict(response.json())

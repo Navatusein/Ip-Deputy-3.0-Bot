@@ -8,5 +8,5 @@ from bot.models.schedule_day import ScheduleDay
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class ScheduleWeek(DataClassJsonMixin):
-    couple_times = list[str]
+    couple_times: list[str]
     schedule_days: list[ScheduleDay]
